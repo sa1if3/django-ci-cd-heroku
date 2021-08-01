@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -73,17 +74,29 @@ WSGI_APPLICATION = 'django_ci_cd_heroku.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DJANGO_DB_NAME', ''),
-        'USER': os.environ.get('DJANGO_DB_USER', ''),
-        'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD', ''),
-        'HOST': os.environ.get('DJANGO_DB_HOST', ''),
-        'PORT': '',
+if os.getenv('GITHUB_WORKFLOW'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'github-actions',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': 'localhost',
+            'PORT': '5432'
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        },
+        
+    }
+    # Heroku: Update database configuration from $DATABASE_URL.
+    import dj_database_url
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
 # To test your db user need permission to create db.
 #ALTER USER username CREATEDB;
 
@@ -122,11 +135,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-STATICFILES_DIRS = [
-    BASE_DIR / "static/",
-    BASE_DIR / "static/css",
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static/",
+#     BASE_DIR / "static/css",
+# ]
 STATIC_URL = '/static/'
 
 # Default primary key field type

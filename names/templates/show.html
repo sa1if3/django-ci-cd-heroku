@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>Name Records</title>  
+      
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>  
+</head>  
+<body>  
+<table class="table table-striped table-bordered table-sm">  
+    <thead class="thead-dark">  
+    <tr>   
+        <th>First Name</th>  
+        <th>Last Name</th>  
+        <th>Actions</th>
+    </tr>  
+    </thead>  
+    <tbody>  
+{% for samplename in samplenames %}  
+    <tr>  
+        <td>{{ samplename.first_name }}</td>  
+        <td>{{ samplename.last_name}}</td>  
+        <td>  
+            <a href="/edit/{{ samplename.id }}/"><span class="glyphicon glyphicon-pencil" >Edit</span></a>  
+            <a href="/delete/{{ samplename.id }}/">Delete</a>  
+        </td>  
+    </tr>  
+{% endfor %}  
+    </tbody>  
+</table>  
+<br>  
+<br>  
+<center><a href="/emp" class="btn btn-primary">Add New Record</a></center>  
+</body>  
+</html>  

@@ -84,7 +84,8 @@ DATABASES = {
         'PORT': '',
     }
 }
-
+# To test your db user need permission to create db.
+#ALTER USER username CREATEDB;
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

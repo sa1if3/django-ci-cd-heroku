@@ -25,8 +25,8 @@ jobs:
           pip install -r requirements.txt
       - name: Run migrations
         run: |
-        python manage.py makemigrations --noinput
-        python manage.py migrate --noinput
+          python manage.py makemigrations --noinput
+          python manage.py migrate --noinput
       - name: Run Tests
         run: |
           python manage.py test

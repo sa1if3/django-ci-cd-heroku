@@ -1,5 +1,6 @@
 from django.db import models
-#random comment
+# random comment
+
 
 class SampleName(models.Model):
     first_name = models.CharField(

@@ -2,6 +2,7 @@ from django.test import TestCase
 
 from names.models import SampleName
 
+
 class SampleNameModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -30,5 +31,5 @@ class SampleNameModelTest(TestCase):
 
     def test_object_name_is_first_name_space_last_name(self):
         samplename = SampleName.objects.get(id=1)
-        expected_object_name = f'{samplename.first_name} {samplename.last_name}'
-        self.assertEqual(str(samplename), expected_object_name)
+        exp_object_name = f'{samplename.first_name} {samplename.last_name}'
+        self.assertEqual(str(samplename), exp_object_name)

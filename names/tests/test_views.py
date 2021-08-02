@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from names.models import SampleName
 
+
 class SampleNameListViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
